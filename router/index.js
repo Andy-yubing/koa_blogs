@@ -5,5 +5,5 @@ const begin = require('../modules/begin')
 // module.exports = router.get("/", begin.login);
 
 router.get("/", begin.login);
-
+router.get("/register", begin.register);
 module.exports = router;

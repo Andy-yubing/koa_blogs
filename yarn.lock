@@ -50,6 +50,12 @@ commander@^2.9.0:
   version "2.17.1"
   resolved "https://registry.npmjs.org/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
 
+compressible@^2.0.6:
+  version "2.0.14"
+  resolved "https://registry.npmjs.org/compressible/-/compressible-2.0.14.tgz#326c5f507fbb055f54116782b969a81b67a29da7"
+  dependencies:
+    mime-db ">= 1.34.0 < 2"
+
 condense-newlines@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/condense-newlines/-/condense-newlines-0.2.1.tgz#3de985553139475d32502c83b02f60684d24c55f"
@@ -161,6 +167,10 @@ fs-extra@^4.0.2:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
+
+fs-readdir-recursive@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27"
 
 get-paths@^0.0.2:
   version "0.0.2"
@@ -312,6 +322,16 @@ koa-send@^5.0.0:
     mz "^2.7.0"
     resolve-path "^1.4.0"
 
+koa-static-cache@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.npmjs.org/koa-static-cache/-/koa-static-cache-5.1.2.tgz#49b592007157b164f5e9df5b276e305c8be5016a"
+  dependencies:
+    compressible "^2.0.6"
+    debug "^3.1.0"
+    fs-readdir-recursive "^1.0.0"
+    mime-types "^2.1.8"
+    mz "^2.7.0"
+
 koa-static@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/koa-static/-/koa-static-5.0.0.tgz#5e92fc96b537ad5219f425319c95b64772776943"
@@ -373,11 +393,11 @@ methods@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-mime-db@~1.35.0:
+"mime-db@>= 1.34.0 < 2", mime-db@~1.35.0:
   version "1.35.0"
   resolved "https://registry.npmjs.org/mime-db/-/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
 
-mime-types@^2.1.18, mime-types@~2.1.18:
+mime-types@^2.1.18, mime-types@^2.1.8, mime-types@~2.1.18:
   version "2.1.19"
   resolved "https://registry.npmjs.org/mime-types/-/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
   dependencies:
