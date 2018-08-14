@@ -1,3 +1,26 @@
 <%- include('./header.ejs', {value}) %>
-<p>注册</p>
+    <div class="container">
+        <form class="form create" action="/signup"  method="post">
+            <div>
+                <label>用户名：</label> 
+                <input placeholder="用户名" type="text" name="name">
+            </div>
+            <div>
+                <label>密码：</label> 
+                <input class="password" type="password" name="password">
+            </div>
+            <div>
+                <label>重复密码：</label> 
+                <input class="repeatpass" type="password" name="repeatpass">
+            </div>
+            <div>
+                <label>上传头像：</label>
+                <input type="file"  id="avator">
+                <input type="hidden" id="avatorVal" name="avator">
+                <img class="preview" alt="预览头像">
+            </div>
+            <div class="submit">注册</div>
+            <!-- <input type="submit" value="注册"> -->
+        </form>
+    </div>
 <%- include('./footer.ejs') %>

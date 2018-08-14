@@ -1,3 +1,5 @@
+
+
 exports.login = async (ctx, next)=>{ 
     let title = 'hello koa2', name = "登录";
     await ctx.render('login', {
@@ -12,3 +14,8 @@ exports.register = async (ctx, next)=>{
         value: name,
     })
 }
+
+exports.registerPost = async (ctx, next)=>{
+    
+}
+

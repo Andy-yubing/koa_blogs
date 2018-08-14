@@ -4,8 +4,8 @@ const views = require('koa-views')
 
 // const serve = require('koa-static');
 const ejs = require("ejs");
-const setting = require("./config/setting")
-const router = require("./router")
+const setting = require("./config/setting");
+const router = require("./router");
 const app = new Koa();
 
 setting(app);
