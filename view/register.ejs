@@ -1,6 +1,10 @@
-<%- include('./header.ejs', {value}) %>
+<%- include('./header.ejs', {link,value}) %>
     <div class="container">
         <form class="form create" action="/signup"  method="post">
+            <div>
+                <label>手机号: </label> 
+                <input type="text" name="phone">
+            </div>
             <div>
                 <label>用户名：</label> 
                 <input placeholder="用户名" type="text" name="name">
@@ -24,3 +28,6 @@
         </form>
     </div>
 <%- include('./footer.ejs') %>
+<script>
+    console.log($)
+</script>

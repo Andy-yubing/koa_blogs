@@ -1,17 +1,18 @@
 
 
 exports.login = async (ctx, next)=>{ 
-    let title = 'hello koa2', name = "登录";
+    let  name = "登录", link ="/less/index.css";
     await ctx.render('login', {
-        title,
         value: name,
+        link, 
     })
 }
 
 exports.register = async (ctx, next)=>{
-    const name = "注册"
+    let name = "注册", link = "/less/index.css";
     await ctx.render('register', {
         value: name,
+        link, 
     })
 }
 
