@@ -1,6 +1,6 @@
 const staticCache = require('koa-static-cache');
 const path = require("path");
-
+const bodyParser = require('koa-bodyparser');
 
 
 module.exports = (app)=>{
@@ -8,5 +8,7 @@ module.exports = (app)=>{
         maxAge: 365 * 24 * 60 * 60,
         dynamic: true,
     }))
-    
+    app.use(bodyParser({
+        formLimit: '1mb',
+    }));
 }

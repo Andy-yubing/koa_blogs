@@ -1,6 +1,6 @@
 <%- include('./header.ejs', {link,value}) %>
     <div class="container">
-        <form class="form create" action="/signup"  method="post">
+        <form class="form create">
             <div>
                 <label>手机号: </label> 
                 <input type="text" name="phone">
@@ -29,5 +29,80 @@
     </div>
 <%- include('./footer.ejs') %>
 <script>
-    console.log($)
+    $(()=>{
+        $('#avator').change(function(){
+		console.log(this.files)
+		if(this.files.length!=0){
+			var file = this.files[0] , fileReader = new FileReader();
+			console.log(fileReader)
+			if(!fileReader){
+				this.value = '';
+				return;
+			}
+			//console.log(/image/g.test(this.files[0].type))
+			if(!/image/g.test(this.files[0].type)){
+				fade("请上传图片文件");
+				$('#avatorVal').val('')
+				$('form .preview').attr('src', '')
+				$('form .preview').fadeOut();
+				return false;
+			}		
+			fileReader.readAsDataURL(file);
+			fileReader.onload = function (e){
+				console.log(e);
+				console.log(this);
+				$('form .preview').attr('src',e.target.result);
+				$('form .preview').fadeIn();
+				let image = new Image();
+				image.src = e.target.result
+				image.onload = ()=>{
+					var canvas = document.createElement('canvas');
+					var ctx = canvas.getContext("2d");
+					canvas.width = 100;
+					canvas.height = 100;
+					ctx.clearRect(0, 0, 100, 100);
+					ctx.drawImage(image, 0, 0, 100, 100);
+					var blob = canvas.toDataURL("image/png");
+					console.log(blob)
+					$('#avatorVal').val(blob)
+				}
+				
+			}
+		}
+	})
+        $(".submit").on("click",()=>{
+           if ($('input[name=name]').val().trim() == '') {
+                // $('.error').text('请输入用户名')
+                alert('用户名或密码没填')
+            }else if ($('input[name=name]').val().match(/[<'">]/g)) {
+                // $('.error').text('请输入合法字符')
+                alert('用户名或密码没填')
+            }else{
+                console.log($(".form").serialize());
+                $.ajax({
+                    url: "/register",
+                    data: $(".form").serialize(),
+                    type: "post",
+                    cache: false,
+                    dataType: 'json',
+                    success: function(msg){
+                        console.log(msg);
+                        if(msg.data == 1){
+                            alert("用户名已存在")
+                        }else if(msg.data == 2){
+                            alert("输入有误")
+                        }else{
+                            alert('注册成功');
+                            setTimeout(()=>{
+                                window.location.href="/"
+                            },1000)
+                        }
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+            }
+        })
+    })
 </script>
