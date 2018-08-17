@@ -18,7 +18,7 @@ exports.register = async (ctx, next)=>{
 }
 
 exports.registerPost = async (ctx, next)=>{
-    console.log(ctx.request.body);
+    console.log(ctx.request.body, sql);
     let user = {
         phone: ctx.request.body.phone,
         name: ctx.request.body.name,
@@ -27,8 +27,9 @@ exports.registerPost = async (ctx, next)=>{
         img: ctx.request.body.avator,
     }
     
-    sql.findDataByName(user.name).then(res=>{
-        if(res){
+    await sql.findDataByName(user.name).then(result=>{
+        console.log(result)
+        if (result.length){
             try {
                 throw Error(`用户名已经存在`)
             } catch (err) {
@@ -47,7 +48,7 @@ exports.registerPost = async (ctx, next)=>{
             let getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now();
 
             let upload = async ()=>{
-               await fs.writeFile('./static/images/' + getName + '.png', dataBuffer, err => {
+              await  fs.writeFile('./static/images/' + getName + '.png', dataBuffer, err => {
                     if (err) {
                         throw err;
                     };
@@ -61,7 +62,7 @@ exports.registerPost = async (ctx, next)=>{
                 };
                 // phone, name, password, img, time
                 console.log([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')]);
-                sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
+                  sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
             }
         }
     })
