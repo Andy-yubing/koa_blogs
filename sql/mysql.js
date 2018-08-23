@@ -28,27 +28,25 @@ const query = (sql, values)=>{
         })
     })
 }
-
 // const query = async (sql, values)=>{
 //      // 在数据池中进行会话操作
 //      try {
-//        await pool.getConnection(function (err, connection) {
+//         pool.getConnection( function (err, connection) {
 //              if (err) {
 //                  throw err;
 //              } else {
-//                  connection.query(sql, values, (error, results, fields) => {
+//             return connection.query(sql, values, (error, results, fields) => {
 //                      // 结束会话
 //                      connection.release()
 //                      // 如果有错误就抛出
 //                      if (error) throw error;
 //                  })
-//              }
-//          })
+//             }
+//         })
 //      } catch (error) {
 //          console.log(err); // 这里捕捉到错误 `error`
 //      }
 // }
-
 
 const createTbale = (sql) => {
     query(sql, []);
@@ -81,14 +79,15 @@ createTbale(users);
 createTbale(article);
 
 const insertData = (value) => {
-    let _sql = "insert into users(phone,username,password,img,moment) values(?,?,?,?,?)";
+    let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
 }
 
 const findDataByName = (value)=>{
-    let _sql = `select * from users where username="${value}"`;
+    let _sql = `select * from users where username = "${value}"`;
     return query(_sql);
 }
+
 
 
 module.exports = {

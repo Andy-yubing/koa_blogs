@@ -44,26 +44,30 @@ exports.registerPost = async (ctx, next)=>{
             };
         }else{
             let base64Data = user.img.replace(/^data:image\/\w+;base64,/, "");
+            if (!base64Data){
+                ctx.body = {
+                    data: 2,
+                };
+                return false;
+            }
             let dataBuffer = new Buffer(base64Data, 'base64');
             let getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now();
-
             let upload = async ()=>{
-              await  fs.writeFile('./static/images/' + getName + '.png', dataBuffer, err => {
-                    if (err) {
-                        throw err;
-                    };
-                    console.log('头像上传成功')
-                });
+                try {
+                    await fs.writeFile('./static/images/' + getName + '.png', dataBuffer, err => {
+                        if (err) {
+                            throw err;
+                        };
+                        ctx.body = {
+                            data: 3
+                        };
+                        sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
             }
             
-            if (upload) {
-                ctx.body = {
-                    data: 3
-                };
-                // phone, name, password, img, time
-                console.log([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')]);
-                  sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
-            }
         }
     })
 }

@@ -1,3 +1,4 @@
+const createTable = require("./createTable")
 const mysql = require("mysql");
 // 创建数据池
 const pool = mysql.createPool({
@@ -5,7 +6,7 @@ const pool = mysql.createPool({
     user: 'root',
     password: '123456',
     port: '3306',
-    database: 'myblogs'
+    database: 'text_1'
 });
 
 const query = function (sql, values) {
@@ -41,31 +42,13 @@ const createTbale = (sql) => {
     query(sql, []);
 }
 
-//建表
-const users = `create table if not exists users(
-     id INT NOT NULL AUTO_INCREMENT,
-        phone VARCHAR(20) NOT NULL,
-        username VARCHAR(30) NOT NULL,
-        password VARCHAR(30) NOT NULL,
-        img VARCHAR(100) NOT NULL,
-        moment VARCHAR(100) NOT NULL,
-        PRIMARY KEY (id)
-);`
+const createTbale = (sql) => {
+    query(sql, []);
+}
 
-const article = `create table if not exists article(
-         id INT NOT NULL AUTO_INCREMENT,
-         title VARCHAR(80) NOT NULL,
-         value VARCHAR(100) NOT NULL,
-         moment VARCHAR(100) NOT NULL,
-         PV INT NOT NULL,
-         pageView INT NOT NULL,
-         PRIMARY KEY (id)
-     );`
+createTbale(createTable.users);
 
-
-createTbale(users);
-
-createTbale(article);
+createTbale(createTable.article);
 
 
 
