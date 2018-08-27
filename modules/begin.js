@@ -18,7 +18,7 @@ exports.register = async (ctx, next)=>{
 }
 
 exports.registerPost = async (ctx, next)=>{
-    console.log(ctx.request.body, sql);
+    //console.log(ctx.request.body, sql);
     let user = {
         phone: ctx.request.body.phone,
         name: ctx.request.body.name,
