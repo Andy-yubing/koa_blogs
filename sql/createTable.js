@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: 'Yubing_123',
     port: '3306',
     database: 'text_1'
 });
@@ -43,7 +43,7 @@ const createTbale = (sql) => {
 
 //建表
 const users = `create table if not exists users(
-     id INT NOT NULL AUTO_INCREMENT,
+        id INT UNSIGEND NOT NULL AUTO_INCREMENT,
         phone VARCHAR(20) NOT NULL,
         username VARCHAR(30) NOT NULL,
         password VARCHAR(30) NOT NULL,
