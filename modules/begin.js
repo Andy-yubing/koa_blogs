@@ -18,7 +18,7 @@ exports.register = async (ctx, next)=>{
 }
 
 exports.registerPost = async (ctx, next)=>{
-    //console.log(ctx.request.body, sql);
+    console.log(ctx.request.body, sql);
     let user = {
         phone: ctx.request.body.phone,
         name: ctx.request.body.name,
@@ -52,22 +52,32 @@ exports.registerPost = async (ctx, next)=>{
             }
             let dataBuffer = new Buffer(base64Data, 'base64');
             let getName = Number(Math.random().toString().substr(3)).toString(36) + Date.now();
-            let upload = async ()=>{
-                try {
-                    await fs.writeFile('./static/images/' + getName + '.png', dataBuffer, err => {
-                        if (err) {
-                            throw err;
-                        };
-                        ctx.body = {
-                            data: 3
-                        };
-                        sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
-                    });
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+            // let upload = new Promise((resolve, reject)=>{
+            //         fs.writeFile('static/images/' + getName + '.png', dataBuffer, err => {
+            //             if (err) {
+            //                 reject(err)
+            //             };
+            //             resolve(true)
+            //         });
+            // })
+            // upload.then(value=>{
+            //     ctx.body = {data: 3};
+            //     sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
+            // },err=>{
+            //     console.log(err)
+            // })
             
+            async function upload(){
+                    await fs.writeFile('static/images/' + getName + '.png', dataBuffer, err => {
+                        try {
+                            ctx.body = { data: 3 };
+                            sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
+                        } catch (err) {
+                            console.log(err);
+                        }
+                    });    
+            }
+            upload();
         }
     })
 }

@@ -1,9 +1,9 @@
 const mysql = require("mysql");
-// 创建数据池
+// 创建数据池   密码: Yubing_123
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'Yubing_123',
+    password: '123456',
     port: '3306',
     database: 'text_1'
 });
@@ -43,7 +43,7 @@ const createTbale = (sql) => {
 
 //建表
 const users = `create table if not exists users(
-        id INT UNSIGEND NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         phone VARCHAR(20) NOT NULL,
         username VARCHAR(30) NOT NULL,
         password VARCHAR(30) NOT NULL,
@@ -57,8 +57,9 @@ const article = `create table if not exists article(
          title VARCHAR(80) NOT NULL,
          value VARCHAR(100) NOT NULL,
          moment VARCHAR(100) NOT NULL,
-         PV INT NOT NULL,
-         pageView INT NOT NULL,
+         PV INT UNSIGNED NOT NULL,
+         pageView INT UNSIGNED NOT NULL,
+         age TINYINT UNSIGNED NOT NULL,
          PRIMARY KEY (id)
 );`
 

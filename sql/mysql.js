@@ -8,45 +8,42 @@ const pool = mysql.createPool({
     database: 'myblogs'  // 选中数据库
 })
 
-const query = (sql, values)=>{
-     // 在数据池中进行会话操作
-    return new Promise((resolve, reject) => {
-        pool.getConnection(function (err, connection) {
-            if (err) {
-                reject(err)
-            } else {
-                connection.query(sql, values, (err, rows) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(rows)
-                    }
-                    // 结束会话
-                    connection.release()
-                })
-            }
-        })
-    })
-}
-// const query = async (sql, values)=>{
+// const query = (sql, values)=>{
 //      // 在数据池中进行会话操作
-//      try {
-//         pool.getConnection( function (err, connection) {
-//              if (err) {
-//                  throw err;
-//              } else {
-//             return connection.query(sql, values, (error, results, fields) => {
-//                      // 结束会话
-//                      connection.release()
-//                      // 如果有错误就抛出
-//                      if (error) throw error;
-//                  })
+//     return new Promise((resolve, reject) => {
+//         pool.getConnection(function (err, connection) {
+//             if (err) {
+//                 reject(err)
+//             } else {
+//                 connection.query(sql, values, (err, rows) => {
+//                     if (err) {
+//                         reject(err)
+//                     } else {
+//                         resolve(rows)
+//                     }
+//                     // 结束会话
+//                     connection.release()
+//                 })
 //             }
 //         })
-//      } catch (error) {
-//          console.log(err); // 这里捕捉到错误 `error`
-//      }
+//     })
 // }
+async function query(){
+       await pool.getConnection(function (err, connection){
+           try {
+               connection.query(sql, values,(err,rows)=>{
+                   if(err){
+                       throw new Error(err);
+                   }
+                   connection.release()
+                   return ""
+               })
+           } catch (err) {
+               console.log(err)
+           }
+       })
+   }
+query().then(v => console.log(v)).catch(e => console.log(e));
 
 const createTbale = (sql) => {
     query(sql, []);
