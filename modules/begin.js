@@ -9,6 +9,40 @@ exports.login = async (ctx, next)=>{
     })
 }
 
+exports.loginPost = async (ctx,next)=>{
+    console.log(ctx);
+    let user = {
+        name: ctx.request.body.name,
+        phone: ctx.request.body.phone,
+    }
+    
+    if (user.name !== "" && user.phone !== ""){
+        await sql.findUsersByName(user.name).then(result=>{
+            if(result.length){
+                ctx.session = {
+                    user_id: Math.random().toString(36).substr(2),
+                    count: 0
+                }
+                
+                ctx.body = {
+                    code: 1,
+                    msg: "",
+                    data: result,
+                    token: ctx.session
+                }
+                //ctx.redirect('/home')
+            }
+        },err=>{
+            console.log(err);
+        })
+    }else{
+        ctx.body = {
+            code: 0,
+            msg:"用户名或密码为空"
+        }
+    }
+}
+
 exports.register = async (ctx, next)=>{
     let name = "注册", link = "/less/index.css";
     await ctx.render('register', {
@@ -18,7 +52,7 @@ exports.register = async (ctx, next)=>{
 }
 
 exports.registerPost = async (ctx, next)=>{
-    console.log(ctx.request.body, sql);
+    // console.log(ctx.request.body, sql);
     let user = {
         phone: ctx.request.body.phone,
         name: ctx.request.body.name,
@@ -27,7 +61,7 @@ exports.registerPost = async (ctx, next)=>{
         img: ctx.request.body.avator,
     }
     
-    await sql.findDataByName(user.name).then(result=>{
+    await sql.findUsersByName(user.name).then(result=>{
         console.log(result)
         if (result.length){
             try {
@@ -66,18 +100,17 @@ exports.registerPost = async (ctx, next)=>{
             // },err=>{
             //     console.log(err)
             // })
-            
             async function upload(){
                     await fs.writeFile('static/images/' + getName + '.png', dataBuffer, err => {
-                        try {
-                            ctx.body = { data: 3 };
-                            sql.insertData([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
-                        } catch (err) {
-                            console.log(err);
+                        if(err){
+                            throw new Error(err);
                         }
                     });    
             }
-            upload();
+            upload().then(() => { 
+                ctx.body = { data: 3 } 
+                sql.insertUsers([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
+            }).catch(err => console.log(err));
         }
     })
 }

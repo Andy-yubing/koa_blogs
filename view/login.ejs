@@ -1,4 +1,43 @@
 <%- include('./header.ejs', {value,link}) %>
-<h1><%= value %></h1>
-<p>EJS Welcome to  登录</p>
+    <div class="container">
+		<form class="form create" method="post ">
+			<div>
+				<label>用户名：</label> 
+				<input placeholder="用户名" type="text" name="name">
+			</div>
+			<div>
+				<label>密码：</label> 
+				<input placeholder="密码" type="password" name="password">
+			</div>
+			<div class="submit">登录</div>
+		</form>		
+    </div>
 <%- include('./footer.ejs') %>
+
+<script>
+    $(".submit").on("click",function(){
+        if($("input[type=text]").val()=="" || $("input[type=password]").val()==""){
+            alert("用户名或密码为空")
+        }else{
+            $.ajax({
+                url: "/loginPost",
+                type: "post",
+                data: $(".form").serialize(),
+                dataType: 'json',
+                cache: false,
+                success:function(result){
+                    console.log(result)
+                    if(result.code==1){
+                        console.log("登录成功")
+                       // window.location.href = "/home"
+                    }else{
+                        alert("登录失败")
+                    }
+                },
+                error:function(err){
+                    console.log(err)
+                }
+            })
+        }
+    })
+</script>

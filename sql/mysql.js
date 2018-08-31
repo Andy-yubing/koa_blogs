@@ -8,42 +8,42 @@ const pool = mysql.createPool({
     database: 'myblogs'  // 选中数据库
 })
 
-// const query = (sql, values)=>{
-//      // 在数据池中进行会话操作
-//     return new Promise((resolve, reject) => {
-//         pool.getConnection(function (err, connection) {
-//             if (err) {
-//                 reject(err)
-//             } else {
-//                 connection.query(sql, values, (err, rows) => {
-//                     if (err) {
-//                         reject(err)
-//                     } else {
-//                         resolve(rows)
-//                     }
-//                     // 结束会话
-//                     connection.release()
-//                 })
-//             }
-//         })
-//     })
-// }
-async function query(){
-       await pool.getConnection(function (err, connection){
-           try {
-               connection.query(sql, values,(err,rows)=>{
-                   if(err){
-                       throw new Error(err);
-                   }
-                   connection.release()
-                   return ""
-               })
-           } catch (err) {
-               console.log(err)
-           }
-       })
-   }
-query().then(v => console.log(v)).catch(e => console.log(e));
+const query = (sql, values)=>{
+     // 在数据池中进行会话操作
+    return new Promise((resolve, reject) => {
+        pool.getConnection(function (err, connection) {
+            if (err) {
+                reject(err)
+            } else {
+                connection.query(sql, values, (err, rows) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(rows)
+                    }
+                    // 结束会话
+                    connection.release()
+                })
+            }
+        })
+    })
+}
+// async function query(sql, values){
+//     await pool.getConnection(function (err, connection){
+//            try {
+//                 connection.query(sql, values,(err,rows)=>{
+//                    if(err){
+//                        throw new Error(err);
+//                    }
+//                    connection.release()
+//                    return "success";
+//                })
+//            } catch (err) {
+//                console.log(err)
+//            }
+//        })
+//    }
+// query().then(v => console.log(v)).catch(e => console.log(e));
 
 const createTbale = (sql) => {
     query(sql, []);
@@ -75,12 +75,12 @@ const article = `
 createTbale(users);
 createTbale(article);
 
-const insertData = (value) => {
+const insertUsers = (value) => {
     let _sql = `insert into users(phone,username,password,img,moment) values(?,?,?,?,?)`;
     return query(_sql, value)
 }
 
-const findDataByName = (value)=>{
+const findUsersByName = (value)=>{
     let _sql = `select * from users where username = "${value}"`;
     return query(_sql);
 }
@@ -88,6 +88,6 @@ const findDataByName = (value)=>{
 
 
 module.exports = {
-    insertData,
-    findDataByName,
+    insertUsers,
+    findUsersByName,
 }

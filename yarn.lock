@@ -234,7 +234,7 @@ debug@^3.1.0:
   dependencies:
     ms "2.0.0"
 
-deep-equal@~1.0.1:
+deep-equal@^1.0.1, deep-equal@~1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
@@ -644,6 +644,14 @@ koa-send@^5.0.0:
     mz "^2.7.0"
     resolve-path "^1.4.0"
 
+koa-session-minimal@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/koa-session-minimal/-/koa-session-minimal-3.0.4.tgz#d6a15beeed77d5d3e26a421dbb98a61f63a8afcd"
+  dependencies:
+    co "^4.6.0"
+    deep-equal "^1.0.1"
+    uid-safe "^2.1.2"
+
 koa-static-cache@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/koa-static-cache/-/koa-static-cache-5.1.2.tgz#49b592007157b164f5e9df5b276e305c8be5016a"
@@ -896,6 +904,10 @@ qs@^6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
+random-bytes@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/random-bytes/-/random-bytes-1.0.0.tgz#4f68a1dc0ae58bd3fb95848c30324db75d64360b"
+
 raw-body@^2.3.3:
   version "2.3.3"
   resolved "https://registry.npmjs.org/raw-body/-/raw-body-2.3.3.tgz#1b324ece6b5706e153855bc1148c65bb7f6ea0c3"
@@ -1079,6 +1091,12 @@ type-is@^1.6.16:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.18"
+
+uid-safe@^2.1.2:
+  version "2.1.5"
+  resolved "https://registry.npmjs.org/uid-safe/-/uid-safe-2.1.5.tgz#2b3d5c7240e8fc2e58f8aa269e5ee49c0857bd3a"
+  dependencies:
+    random-bytes "~1.0.0"
 
 universalify@^0.1.0:
   version "0.1.2"
