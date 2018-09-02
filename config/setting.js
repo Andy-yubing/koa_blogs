@@ -3,13 +3,13 @@ const path = require("path");
 const bodyParser = require('koa-bodyparser');
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
-
+const config = require('../config')
 
 let store = new MysqlSession({
-    user: 'root',
-    password: '123456',
-    database: 'myblogs',
-    host: '127.0.0.1',
+    user: config.user,
+    password: config.password,
+    database: config.database,
+    host: config.host,
 })
 let cookie = {
     maxAge: '', // cookie有效时长

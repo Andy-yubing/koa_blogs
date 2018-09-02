@@ -1,10 +1,11 @@
 const mysql = require("mysql");
+const config = require("../config")
 // 创建数据池   密码: Yubing_123
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '123456',
-    port: '3306',
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    port: config.port,
     database: 'text_1'
 });
 

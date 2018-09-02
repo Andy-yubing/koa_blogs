@@ -1,11 +1,12 @@
 const mysql = require('mysql')
+const config = require("../config")
 // 创建数据池
 const pool = mysql.createPool({
-    host: 'localhost',   // 数据库地址
-    user: 'root',    // 数据库用户
-    password: '123456',   // 数据库密码
-    port: '3306',
-    database: 'myblogs'  // 选中数据库
+    host: config.host,   // 数据库地址
+    user: config.user,    // 数据库用户
+    password: config.password,   // 数据库密码
+    port: config.port,
+    database: config.database  // 选中数据库
 })
 
 const query = (sql, values)=>{
