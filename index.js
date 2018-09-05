@@ -7,6 +7,8 @@ const ejs = require("ejs");
 const setting = require("./config/setting");
 const router = require("./router");
 const app = new Koa();
+const middleware = require("./modules/middleware")
+console.log(middleware );
 
 setting(app);
 
@@ -14,7 +16,10 @@ app.use(views(path.join(__dirname, './view'), {
     extension: 'ejs'
 }))
 
-app.use(router.routes())
+// console.log(router);
+
+app.use(router.routes());
+// app.use(router.routes()) .use(router.allowedMethods());// 返回匹配路由的复合中间件
 
 app.listen(8900,(err)=>{
     if(err){

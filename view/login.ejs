@@ -20,18 +20,22 @@
         if($("input[type=text]").val()=="" || $("input[type=password]").val()==""){
             alert("用户名或密码为空")
         }else{
+            console.log("submit")
             $.ajax({
                 url: "/loginPost",
                 type: "post",
                 data: $(".form").serialize(),
                 dataType: 'json',
-                cache: false,
                 success:function(result){
                     console.log(result)
                     if(result.code==1){
                         console.log("登录成功")
-                       // window.location.href = "/home"
-                    }else{
+                        window.location.href = "/home"
+                    }else if(result.code==2){
+                        alert(result.msg)
+                    }else if(result.code==3){
+                        alert(result.msg)
+                    } else{
                         alert("登录失败")
                     }
                 },
@@ -41,8 +45,8 @@
             })
         }
     })
-
+    
     $(".register").on("click",function(){
-        
+        window.location.href = "/register"
     })
 </script>

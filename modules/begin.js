@@ -2,6 +2,7 @@ const md5 = require('md5');
 const moment = require("moment");
 const fs = require("fs");
 exports.login = async (ctx, next)=>{ 
+    console.log("12345678");
     let  name = "登录", link ="/less/index.css";
     await ctx.render('login', {
         value: name,
@@ -17,20 +18,38 @@ exports.loginPost = async (ctx,next)=>{
     }
     
     if (user.name !== "" && user.phone !== ""){
+
         await sql.findUsersByName(user.name).then(result=>{
-            if(result.length){
+            console.log(result);
+           
+            if(result.length>0){
                 ctx.session = {
                     user_id: Math.random().toString(36).substr(2),
                     count: 0
                 }
-                
+                ctx.session.count = ctx.session.count + 1;
+                console.log(ctx.session);
                 ctx.body = {
                     code: 1,
-                    msg: "",
+                    msg: "成功",
                     data: result,
                     token: ctx.session
                 }
                 //ctx.redirect('/home')
+            } else if (result.length==0){
+                ctx.body = {
+                    code: 2,
+                    msg: "账户信息为空",
+                    data: result,
+                    token: ctx.session
+                }
+            }else{
+                ctx.body = {
+                    code: 3,
+                    msg: "账户信息报错",
+                    data: result,
+                    token: ctx.session
+                }
             }
         },err=>{
             console.log(err);

@@ -82,7 +82,7 @@ const insertUsers = (value) => {
 }
 
 const findUsersByName = (value)=>{
-    let _sql = `select * from users where username = "${value}"`;
+    let _sql = `SELECT * FROM users WHERE username = "${value}"`;
     return query(_sql);
 }
 
