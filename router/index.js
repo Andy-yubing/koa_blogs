@@ -12,7 +12,7 @@ global.sql2 = sql2;
 
 //拦截器
 const checkLogin = async (ctx, next) => {
-    console.log("ctx",ctx);
+    console.log("ctx" ,ctx);
     const allowpage = ['/login', '/register'], allowPost = ['/loginPost','/register'];
     let url = ctx.url;
     if (ctx.session.user_id) {
