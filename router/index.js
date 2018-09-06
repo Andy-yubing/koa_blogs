@@ -16,11 +16,17 @@ const checkLogin = async (ctx, next) => {
     const allowpage = ['/login', '/register'], allowPost = ['/loginPost','/register'];
     let url = ctx.url;
     if (ctx.session.user_id) {
-        if (url === "/login") {
-            ctx.redirect('/home');
-            return false;
+        if (ctx.method == "POST"){
+            await next();
+        }else{
+            if (url === "/login") {
+                ctx.redirect('/home');
+                return false;
+            }else{
+                //可以添加
+                await next();
+            }
         }
-        await next();
     } else {
         if (allowpage.indexOf(url) > -1) {
             await next();

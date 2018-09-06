@@ -33,7 +33,6 @@ exports.loginPost = async (ctx,next)=>{
                     code: 1,
                     msg: "成功",
                     data: result,
-                    token: ctx.session
                 }
                 //ctx.redirect('/home')
             } else if (result.length==0){
@@ -41,14 +40,12 @@ exports.loginPost = async (ctx,next)=>{
                     code: 2,
                     msg: "账户信息为空",
                     data: result,
-                    token: ctx.session
                 }
             }else{
                 ctx.body = {
                     code: 3,
                     msg: "账户信息报错",
                     data: result,
-                    token: ctx.session
                 }
             }
         },err=>{
