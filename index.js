@@ -18,8 +18,8 @@ app.use(views(path.join(__dirname, './view'), {
 
 // console.log(router);
 
-app.use(router.routes());
-// app.use(router.routes()) .use(router.allowedMethods());// 返回匹配路由的复合中间件
+app.use(router.routes()).use(router.allowedMethods());
+// app.use(router.routes()).use(router.allowedMethods());// 返回匹配路由的复合中间件
 
 app.listen(8900,(err)=>{
     if(err){

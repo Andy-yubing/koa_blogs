@@ -1,6 +1,7 @@
 const md5 = require('md5');
 const moment = require("moment");
 const fs = require("fs");
+const jsonwebtoken = require('jsonwebtoken')
 exports.login = async (ctx, next)=>{ 
     console.log("12345678");
     let  name = "登录", link ="/less/index.css";
@@ -27,12 +28,19 @@ exports.loginPost = async (ctx,next)=>{
                     user_id: Math.random().toString(36).substr(2),
                     count: 0
                 }
+                const userToken = {
+                    name: user.name,
+                    id: user.id
+                }
+                const token = jsonwebtoken.sign(userToken, "andy", { expiresIn: '1h' })  // 签发token
                 ctx.session.count = ctx.session.count + 1;
-                console.log(ctx.session);
+                //console.log(ctx.session);
+                console.log("token",token);
                 ctx.body = {
                     code: 1,
                     msg: "成功",
                     data: result,
+                    token
                 }
                 //ctx.redirect('/home')
             } else if (result.length==0){

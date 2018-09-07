@@ -4,6 +4,8 @@ const bodyParser = require('koa-bodyparser');
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
 const config = require('../config')
+const intercept = require("./intercept")
+
 
 let store = new MysqlSession({
     user: config.user,
@@ -38,31 +40,10 @@ module.exports = (app)=>{
         cookie: cookie
     }))
 
+    intercept(app);
     
 }
 
 
 
 
-// //定义允许直接访问的url
-// const allowpage = ['/login', '/register']
-// //拦截
-// function localFilter(ctx) {
-//     console.log(ctx,ctx.request.url)
-//     let url = ctx.originalUrl;
-//     if (ctx.session.user_id) {
-//         if (url === "/login") {
-//             ctx.redirect('/home')
-//         }
-//         console.log('login status validate success')
-//     }else{
-//         if (allowpage.indexOf(url) > -1) {
-//             //logger.info('当前地址可直接访问')
-//             console.log('当前地址可直接访问');
-//         } else {
-//             console.log('login status validate fail')
-//             ctx.redirect('/login')
-//         }
-//     } 
-    
-// }

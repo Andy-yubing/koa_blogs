@@ -10,7 +10,7 @@ global.sql = sql;
 global.sql2 = sql2;
 
 
-//拦截器
+//拦截器 客户端没有禁用cookie
 const checkLogin = async (ctx, next) => {
     console.log("ctx" ,ctx);
     const allowpage = ['/login', '/register'], allowPost = ['/loginPost','/register'];
@@ -54,7 +54,7 @@ const checkLogin = async (ctx, next) => {
     }
 }
 
-router.all("*",checkLogin);
+//router.all("*",checkLogin);
 //页面
 router.get("/",async (ctx, next)=>{
     ctx.redirect('/login')
