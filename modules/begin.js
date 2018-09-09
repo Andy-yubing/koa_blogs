@@ -2,6 +2,8 @@ const md5 = require('md5');
 const moment = require("moment");
 const fs = require("fs");
 const jsonwebtoken = require('jsonwebtoken')
+
+
 exports.login = async (ctx, next)=>{ 
     console.log("12345678");
     let  name = "登录", link ="/less/index.css";
@@ -48,12 +50,14 @@ exports.loginPost = async (ctx,next)=>{
                     code: 2,
                     msg: "账户信息为空",
                     data: result,
+                    token:'',
                 }
             }else{
                 ctx.body = {
                     code: 3,
                     msg: "账户信息报错",
                     data: result,
+                    token:''
                 }
             }
         },err=>{

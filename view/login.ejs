@@ -30,6 +30,7 @@
                     console.log(result)
                     if(result.code==1){
                         console.log("登录成功")
+                        sessionStorage.setItem('token',result.token)
                         window.location.href = "/home"
                     }else if(result.code==2){
                         alert(result.msg)

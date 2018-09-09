@@ -36,5 +36,6 @@ module.exports = (app)=>{
         }
     })
 
-    app.use(jwt({ secret: "andy" }).unless({ path: [/^\/api\/login/, /^\/api\/createUser/, /^\/login/, /^\/register/, /^\/loginPost/, /^\/home/]}))
+    app.use(jwt({ secret: "andy" }).unless({
+        path: [/^\/api\/login/, /^\/api\/createUser/, /^\/login/, /^\/register/, /^\/loginPost/, /^\//]}))
 }

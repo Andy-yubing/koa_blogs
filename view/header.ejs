@@ -5,6 +5,22 @@
     <link rel="stylesheet" href="<%= link %>">
     <script src="/js/jquery.js"></script>
     <script src="/js/public.js"></script>
+    <script>
+        console.log(sessionStorage.getItem("token"))
+        
+        $.ajax({
+                url: '/iflogin',
+                type: "post",
+                data: {'token':sessionStorage.getItem("token")},
+                datatype: 'json',
+                success(res){
+                    console.log(res)
+                },
+                err(err){
+                    console.log(err)
+                }
+            })
+    </script>  
 </head>
 <body>
 <header>
