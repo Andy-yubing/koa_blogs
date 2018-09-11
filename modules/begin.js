@@ -13,8 +13,10 @@ exports.login = async (ctx, next)=>{
     })
 }
 
+
+
 exports.loginPost = async (ctx,next)=>{
-    console.log(ctx);
+   
     let user = {
         name: ctx.request.body.name,
         phone: ctx.request.body.phone,
@@ -32,12 +34,12 @@ exports.loginPost = async (ctx,next)=>{
                 }
                 const userToken = {
                     name: user.name,
-                    id: user.id
+                    id: result[0].id
                 }
                 const token = jsonwebtoken.sign(userToken, "andy", { expiresIn: '1h' })  // 签发token
                 ctx.session.count = ctx.session.count + 1;
                 //console.log(ctx.session);
-                console.log("token",token);
+                console.log("签发token",token);
                 ctx.body = {
                     code: 1,
                     msg: "成功",

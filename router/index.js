@@ -72,7 +72,7 @@ router.get("/quit", async (ctx, next) => {
 
 //业务处理
 router.post('/iflogin', async (ctx,next)=>{
-    console.log(ctx);
+    console.log("iflogin",ctx);
     if (ctx.user){
         ctx.body={
             code:1,

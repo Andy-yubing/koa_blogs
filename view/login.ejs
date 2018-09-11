@@ -31,7 +31,20 @@
                     if(result.code==1){
                         console.log("登录成功")
                         sessionStorage.setItem('token',result.token)
-                        window.location.href = "/home"
+                        // this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + bean.token
+                        window.location.href = `/home?token=${result.token}`;
+                        // $.ajax({
+                        //     type: "GET",
+                        //     url: "/home",
+                        //     async: true,  
+                        //     beforeSend: function(xhr) {
+                        //         xhr.setRequestHeader("Authorization", "Bearer " + result.token);
+                        //     },
+                        //     success: function(data) {
+                        //         console.log(data);
+                        //     }
+                        // });
+
                     }else if(result.code==2){
                         alert(result.msg)
                     }else if(result.code==3){

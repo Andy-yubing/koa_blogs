@@ -5,12 +5,17 @@ const verify = util.promisify(jsonwebtoken.verify)
 module.exports = (app)=>{
 
     app.use(async (ctx, next)=>{
+        console.log("haha", ctx)
         try {
-            const token = ctx.header.authorization  // 获取jwt
+            //const token = ctx.header.authorization  // 获取jwt
+            const token = ctx.query.token
+            console.log('获取token', token)
             if (token) {
                 let payload
                 try {
-                    payload = await verify(token.split(' ')[1], "andy")  // 解密payload，获取用户名和ID
+                    //payload = await verify(token.split(' ')[1], "andy")  // 解密payload，获取用户名和ID
+                    payload = await verify(token, "andy") 
+                    console.log('payload', payload);
                     ctx.user = {
                         name: payload.name,
                         id: payload.id
@@ -37,5 +42,5 @@ module.exports = (app)=>{
     })
 
     app.use(jwt({ secret: "andy" }).unless({
-        path: [/^\/api\/login/, /^\/api\/createUser/, /^\/login/, /^\/register/, /^\/loginPost/, /^\//]}))
+        path: [/^\/api\/login/, /^\/api\/createUser/, /^\/login/, /^\/register/, /^\/loginPost/, /^\/favicon.ico/]}))
 }
