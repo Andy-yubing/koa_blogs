@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Andy-yubing/koa_blogs#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "ejs": "^2.6.1",
     "jquery": "^3.3.1",
     "jsdom": "^11.12.0",

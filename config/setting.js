@@ -41,7 +41,6 @@ module.exports = (app)=>{
     }))
 
     intercept(app);
-    
 }
 
 

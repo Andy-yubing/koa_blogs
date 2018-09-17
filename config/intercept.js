@@ -7,14 +7,14 @@ module.exports = (app)=>{
     app.use(async (ctx, next)=>{
         console.log("haha", ctx)
         try {
-            //const token = ctx.header.authorization  // 获取jwt
-            const token = ctx.query.token
+            const token = ctx.header.authorization  // 获取jwt
+            //const token = ctx.query.access_token
             console.log('获取token', token)
+            let payload  = "";
             if (token) {
-                let payload
                 try {
-                    //payload = await verify(token.split(' ')[1], "andy")  // 解密payload，获取用户名和ID
-                    payload = await verify(token, "andy") 
+                    payload = await verify(token.split(' ')[1], "andy")  // 解密payload，获取用户名和ID
+                    //payload = await verify(token, "andy") 
                     console.log('payload', payload);
                     ctx.user = {
                         name: payload.name,

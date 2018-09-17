@@ -54,7 +54,7 @@ const checkLogin = async (ctx, next) => {
     }
 }
 
-//router.all("*",checkLogin);
+//router.all("/*",checkLogin);
 //页面
 router.get("/", async (ctx, next) => {
     ctx.redirect('/login')
@@ -87,7 +87,7 @@ router.post('/iflogin', async (ctx,next)=>{
 })
 router.post("/register", begin.registerPost)
 router.post("/loginPost", begin.loginPost)
-// router.all("*", async (ctx, next) => {
+// router.all("/*", async (ctx, next) => {
 //     console.log("aa", ctx);
 //     next();
 // })
