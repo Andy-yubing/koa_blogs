@@ -39,8 +39,8 @@ module.exports = (app)=>{
         store: store,
         cookie: cookie
     }))
-
-    intercept(app);
+    
+    //intercept(app);
 }
 
 

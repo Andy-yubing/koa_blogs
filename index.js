@@ -1,5 +1,3 @@
-const easyMonitor = require('easy-monitor');
-easyMonitor('koa_blogs');
 const Koa = require('koa');
 const path = require("path")
 const views = require('koa-views')
@@ -18,8 +16,8 @@ app.use(views(path.join(__dirname, './view'), {
 
 // console.log(router);
 
-app.use(router.routes()).use(router.allowedMethods());
-// app.use(router.routes()).use(router.allowedMethods());// 返回匹配路由的复合中间件
+app.use(router.routes()).use(router.allowedMethods());// 返回匹配路由的复合中间件
+// app.use(router.routes());
 
 app.listen({
     host: 'localhost',

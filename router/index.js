@@ -54,12 +54,11 @@ const checkLogin = async (ctx, next) => {
     }
 }
 
-//router.all("/*",checkLogin);
+router.all("/*",checkLogin);
 //页面
 router.get("/", async (ctx, next) => {
     ctx.redirect('/login')
 })
-
 
 router.get("/login", begin.login);
 router.get("/register", begin.register);

@@ -31,16 +31,17 @@
                     if(result.code==1){
                         console.log("登录成功")
                         sessionStorage.setItem('token',result.token)
-                        // this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + bean.token
+                        window.location.href = `/home`;
+                        //this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + bean.token
                         //window.location.href = `/home?access_token=${result.token}`;
-                        $.ajax({
-                            type: "GET",
-                            url: "/home",
-                            headers: {'Authorization': 'Bearer '+result.token}，
-                            success:function(){
+                        // $.ajax({ 
+                        //     type: "GET",
+                        //     url: "/home",
+                        //     headers: {'Authorization': 'Bearer '+result.token}，
+                        //     success:function(res){
                                 
-                            }
-                        });
+                        //     }
+                        // });
                         // $.ajax({
                         //     type: "GET",
                         //     url: "/home",
@@ -52,7 +53,14 @@
                         //         console.log(data);
                         //     }
                         // });
-
+                        // axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.token;
+                        // axios.get('/home')
+                        // .then(function (response) {
+                        //     console.log("response",response);
+                        // })
+                        // .catch(function (error) {
+                        //     console.log("error",error);
+                        // });
                     }else if(result.code==2){
                         alert(result.msg)
                     }else if(result.code==3){
