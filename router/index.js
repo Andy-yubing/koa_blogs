@@ -64,6 +64,7 @@ router.get("/login", begin.login);
 router.get("/register", begin.register);
 router.get("/test", test.one);
 router.get("/home", home.homepage)
+router.post("/publish", home.publish)
 router.get("/quit", async (ctx, next) => {
     ctx.session = {};
     ctx.redirect('/login')

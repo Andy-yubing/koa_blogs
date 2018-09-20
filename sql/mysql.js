@@ -61,17 +61,30 @@ const users = `create table if not exists users(
      )
 ;`
 
+/**
+ * sign: 喜欢/讨厌
+ */
+
 const article = `
      create table if not exists article(
          id INT NOT NULL AUTO_INCREMENT,
-         title VARCHAR(80) NOT NULL,
+         title VARCHAR(60) NOT NULL,
          value VARCHAR(100) NOT NULL,
-         moment VARCHAR(100) NOT NULL,
-         PV INT NOT NULL,
-         pageView INT NOT NULL,
+         moment VARCHAR(100) NOT NULL,  
+         sign enum('喜欢','讨厌','一般'),
          PRIMARY KEY (id)
      )
 ;`
+/**
+ * article 触发器
+ */
+// const tri_insert_article = `
+//         CREATE TRIGGER tri_insert_article BEFORE INSERT ON article FOR EACH ROW
+//         BEGIN
+//         IF NEW.a < 0 THEN
+//         SET NEW.a = 0;
+//         END IF;
+// ;`
 
 createTbale(users);
 createTbale(article);
@@ -86,9 +99,13 @@ const findUsersByName = (value)=>{
     return query(_sql);
 }
 
-
+const inserArticle = (value)=>{
+    let _sql = `insert into article(title,value,moment,sign) values(?,?,?,?)`;
+    return query(_sql, value)
+}
 
 module.exports = {
     insertUsers,
     findUsersByName,
+    inserArticle
 }

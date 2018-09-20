@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require('koa-bodyparser');
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
+var midlog = require('midlog')
 const config = require('../config')
 const intercept = require("./intercept")
 
@@ -24,7 +25,60 @@ let cookie = {
     sameSite: '',
     signed: true,
 }
+/**
+ * midlog日志系统   https://cloud.tencent.com/developer/article/1061894
+ */
+let firstValve = midlog({
+    env: 'online',
+    exportGlobalLogger: true,
+    appender: [{
+        type: 'INFO',
+        logdir: path.join(__dirname,'../log/midlog'),
+        pattern: '%d %r %x{name}:%z %p - %m%n',
+        rollingFile: false,
+        duation: 60000,
+        name: 'info.log',
+        nameformat: '[info.]HH-mm-ss[.log]',
+        tokens: {
+            name: 'tokens_INFO'
+        },
+        cacheSize: 5 * 1024 * 1024,
+        flushTimeout: 15000
+    }, {
+        type: 'ERROR',
+        logdir: path.join(__dirname,'../log/midlog'),
+        pattern: '%d %r %x{name}:%z %p - %m%n',
+        rollingFile: false,
+        duation: 60000,
+        name: 'error.log',
+        nameformat: '[info.]HH-mm-ss[.log]',
+        tokens: {
+            name: 'tokens_ERROR'
+        },
+        cacheSize: 10240,
+        flushTimeout: 10000
+    }, {
+        type: 'TRACE',
+        logdir: path.join(__dirname,'../log/midlog'),
+        pattern: '%d %r %x{name}:%z %p - %m%n',
+        rollingFile: false,
+        duation: 60000,
+        name: 'trace.log',
+        nameformat: '[info.]HH-mm-ss[.log]',
+        tokens: {
+            name: 'tokens_TRACE'
+        },
+        cacheSize: 5 * 1024 * 1024,
+        flushTimeout: 10000
+    }]
+});
+//logger.info('i am the global logger'); //全局调用 
+
+
 module.exports = (app)=>{
+    app.use(firstValve);
+    // 业务中间件
+    
     app.use(staticCache(path.join(__dirname, '../static'), {
         maxAge: 365 * 24 * 60 * 60,
         dynamic: true,
@@ -40,7 +94,7 @@ module.exports = (app)=>{
         cookie: cookie
     }))
     
-    //intercept(app);
+    
 }
 
 

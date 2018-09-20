@@ -4,18 +4,45 @@
             <li>
                 <h4>标题</h4>
                 <p>存放内容 <i>作者:andy</i></p>
-                <span>
-                    <button>删除</button><button>喜欢</button><button>讨厌</button>
+                <span class="container-ul-sign">
+                    <button>喜欢</button><button>讨厌</button><span>删除</span>
                 </span>
+                
             </li>
         </ul>
         <div>
-            <textarea name="" id="" class="container-ul-textarea"></textarea>
-            <button>提交</button>
+            <input type="text" placeholder="输入标题" id="container-ul-title">
+            <textarea name="" id="" placeholder="输入内容" class="container-ul-textarea"></textarea>
+            <button class="container-ul-button">提交</button>
         </div>
     </div>
 <%- include('./footer.ejs') %>
 
 <script>
-    
+    $(function(){
+        $(".container-ul-button").on("click",function(){
+            let title = $("#container-ul-title").val(),value = $(".container-ul-textarea").val(); 
+            let sign = "一般a";
+            save({title,value,sign});
+        })
+        $(".container-ul-sign>button").on("click",function(){
+            let title = $("#container-ul-title").val(),value = $(".container-ul-textarea").val(); 
+            let sign = $(this).html();
+            save({title,value,sign});
+        })
+        function save(resData){
+            $.ajax({
+                url: "/publish",
+                type: "post",
+                dataType: "json",
+                data: resData,
+                success(res){
+                    console.log(res)
+                },
+                error(err){
+                    console.log(err)
+                }
+            })
+        }
+    })
 </script>

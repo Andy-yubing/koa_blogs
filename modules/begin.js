@@ -24,7 +24,6 @@ exports.loginPost = async (ctx,next)=>{
     
     if (user.name !== "" && user.phone !== ""){
         
-
         await sql.findUsersByName(user.name).then(result=>{
             console.log(result);
            
