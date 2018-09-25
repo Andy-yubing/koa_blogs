@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Andy-yubing/koa_blogs#readme",
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "axios": "^0.18.0",
     "ejs": "^2.6.1",
     "jquery": "^3.3.1",
@@ -32,9 +33,12 @@
     "koa-static": "^5.0.0",
     "koa-static-cache": "^5.1.2",
     "koa-views": "^6.1.4",
+    "log4js": "^3.0.5",
     "md5": "^2.2.1",
     "midlog": "0.0.4",
     "moment": "^2.22.2",
-    "mysql": "^2.16.0"
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "winston": "^3.1.0"
   }
 }

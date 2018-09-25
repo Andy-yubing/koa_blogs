@@ -3,11 +3,11 @@ const path = require("path");
 const bodyParser = require('koa-bodyparser');
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
-var midlog = require('midlog')
+var morgan = require('morgan');
+//var midlog = require('midlog')
 const config = require('../config')
 const intercept = require("./intercept")
-
-
+var winston = require('./winston');
 let store = new MysqlSession({
     user: config.user,
     password: config.password,
@@ -25,60 +25,25 @@ let cookie = {
     sameSite: '',
     signed: true,
 }
-/**
- * midlog日志系统   https://cloud.tencent.com/developer/article/1061894
- */
-let firstValve = midlog({
-    env: 'online',
-    exportGlobalLogger: true,
-    appender: [{
-        type: 'INFO',
-        logdir: path.join(__dirname,'../log/midlog'),
-        pattern: '%d %r %x{name}:%z %p - %m%n',
-        rollingFile: false,
-        duation: 60000,
-        name: 'info.log',
-        nameformat: '[info.]HH-mm-ss[.log]',
-        tokens: {
-            name: 'tokens_INFO'
-        },
-        cacheSize: 5 * 1024 * 1024,
-        flushTimeout: 15000
-    }, {
-        type: 'ERROR',
-        logdir: path.join(__dirname,'../log/midlog'),
-        pattern: '%d %r %x{name}:%z %p - %m%n',
-        rollingFile: false,
-        duation: 60000,
-        name: 'error.log',
-        nameformat: '[info.]HH-mm-ss[.log]',
-        tokens: {
-            name: 'tokens_ERROR'
-        },
-        cacheSize: 10240,
-        flushTimeout: 10000
-    }, {
-        type: 'TRACE',
-        logdir: path.join(__dirname,'../log/midlog'),
-        pattern: '%d %r %x{name}:%z %p - %m%n',
-        rollingFile: false,
-        duation: 60000,
-        name: 'trace.log',
-        nameformat: '[info.]HH-mm-ss[.log]',
-        tokens: {
-            name: 'tokens_TRACE'
-        },
-        cacheSize: 5 * 1024 * 1024,
-        flushTimeout: 10000
-    }]
-});
-//logger.info('i am the global logger'); //全局调用 
 
+// loger.log('日志')
+// loger.trace('追踪')
+// loger.debug('调试信息')
+// loger.info('提示信息')
+// loger.warn('警告')
 
+// loger.error('错误')
+// loger.fatal('致命错误')
+
+// logger.info('test info 1')
+// errlogger.error('test error 1')
+// othlogger.trace('test trace 2')
+// reqlogger.info("请求info")
 module.exports = (app)=>{
-    app.use(firstValve);
+    //log4js.useLogger(app, logger);
     // 业务中间件
-    
+    // /app.use(morgan('combined'));
+    app.use(morgan('combined', { stream: winston.stream }));
     app.use(staticCache(path.join(__dirname, '../static'), {
         maxAge: 365 * 24 * 60 * 60,
         dynamic: true,
@@ -93,10 +58,7 @@ module.exports = (app)=>{
         store: store,
         cookie: cookie
     }))
-    
-    
 }
-
 
 
 

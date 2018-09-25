@@ -3,7 +3,6 @@ const moment = require("moment");
 const fs = require("fs");
 const jsonwebtoken = require('jsonwebtoken')
 
-
 exports.login = async (ctx, next)=>{ 
     console.log("12345678");
     let  name = "登录", link ="/less/index.css";
@@ -16,7 +15,6 @@ exports.login = async (ctx, next)=>{
 
 
 exports.loginPost = async (ctx,next)=>{
-   
     let user = {
         name: ctx.request.body.name,
         phone: ctx.request.body.phone,
@@ -39,7 +37,7 @@ exports.loginPost = async (ctx,next)=>{
                 const token = jsonwebtoken.sign(userToken, "andy", { expiresIn: '1h' })  // 签发token
                 ctx.session.count = ctx.session.count + 1;
                 //console.log(ctx.session);
-                console.log("签发token",token);
+                //logger.info("签发token", token)
                 ctx.body = {
                     code: 1,
                     msg: "成功",
@@ -64,6 +62,7 @@ exports.loginPost = async (ctx,next)=>{
             }
         },err=>{
             console.log(err);
+            //logger.error(err);
         })
     }else{
         ctx.body = {
@@ -98,6 +97,7 @@ exports.registerPost = async (ctx, next)=>{
                 throw Error(`用户名已经存在`)
             } catch (err) {
                 console.log(err);
+                //logger.error(err);
             }
             ctx.body = {
                 data: 1
@@ -133,6 +133,7 @@ exports.registerPost = async (ctx, next)=>{
             async function upload(){
                     await fs.writeFile('static/images/' + getName + '.png', dataBuffer, err => {
                         if(err){
+                            //logger.error(err);
                             throw new Error(err);
                         }
                     });    
