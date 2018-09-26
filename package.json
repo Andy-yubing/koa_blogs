@@ -27,6 +27,7 @@
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-jwt": "^3.5.0",
+    "koa-log4": "^2.3.0",
     "koa-mysql-session": "^0.0.2",
     "koa-router": "^7.4.0",
     "koa-session-minimal": "^3.0.4",
@@ -39,6 +40,7 @@
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.3.3"
   }
 }

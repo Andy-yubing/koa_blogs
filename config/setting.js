@@ -4,10 +4,15 @@ const bodyParser = require('koa-bodyparser');
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
 var morgan = require('morgan');
-//var midlog = require('midlog')
-const config = require('../config')
+//const logConfig = require('./logConfig');
+// var log4js = require('log4js');
+const koalog4 = require('koa-log4')
+const config = require('../config');
 const intercept = require("./intercept")
-var winston = require('./winston');
+require("./log4jsConfig");
+// var winston = require('./winston');
+const logger = koalog4.getLogger('app')
+
 let store = new MysqlSession({
     user: config.user,
     password: config.password,
@@ -26,24 +31,18 @@ let cookie = {
     signed: true,
 }
 
-// loger.log('日志')
-// loger.trace('追踪')
-// loger.debug('调试信息')
-// loger.info('提示信息')
-// loger.warn('警告')
-
-// loger.error('错误')
-// loger.fatal('致命错误')
-
-// logger.info('test info 1')
-// errlogger.error('test error 1')
-// othlogger.trace('test trace 2')
-// reqlogger.info("请求info")
 module.exports = (app)=>{
-    //log4js.useLogger(app, logger);
+    //app.use(logConfig);
+    // log4js.useLogger(app, logger);
+    app.use(koalog4.koaLogger(koalog4.getLogger("http"), { level: 'auto' }))
+    app.use(function* (next) {
+        var start = new Date()
+        yield next
+        var ms = new Date() - start
+        logger.info('%s %s - %s', this.method, this.url, ms)
+    })
+    
     // 业务中间件
-    // /app.use(morgan('combined'));
-    app.use(morgan('combined', { stream: winston.stream }));
     app.use(staticCache(path.join(__dirname, '../static'), {
         maxAge: 365 * 24 * 60 * 60,
         dynamic: true,
