@@ -5,7 +5,6 @@ const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
 var morgan = require('morgan');
 //const logConfig = require('./logConfig');
-// var log4js = require('log4js');
 const koalog4 = require('koa-log4')
 const config = require('../config');
 const intercept = require("./intercept")
@@ -32,8 +31,6 @@ let cookie = {
 }
 
 module.exports = (app)=>{
-    //app.use(logConfig);
-    // log4js.useLogger(app, logger);
     app.use(koalog4.koaLogger(koalog4.getLogger("http"), { level: 'auto' }))
     app.use(function* (next) {
         var start = new Date()

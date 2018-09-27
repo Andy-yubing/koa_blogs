@@ -65,6 +65,7 @@ router.get("/register", begin.register);
 router.get("/test", test.one);
 router.get("/home", home.homepage)
 router.post("/publish", home.publish)
+router.post("/getAllData", home.getAllData)
 router.get("/quit", async (ctx, next) => {
     ctx.session = {};
     ctx.redirect('/login')
@@ -87,9 +88,6 @@ router.post('/iflogin', async (ctx,next)=>{
 })
 router.post("/register", begin.registerPost)
 router.post("/loginPost", begin.loginPost)
-// router.all("/*", async (ctx, next) => {
-//     console.log("aa", ctx);
-//     next();
-// })
+
 
 module.exports = router;

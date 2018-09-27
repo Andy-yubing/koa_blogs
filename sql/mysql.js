@@ -72,6 +72,7 @@ const article = `
          value VARCHAR(100) NOT NULL,
          moment VARCHAR(100) NOT NULL,  
          sign enum('喜欢','讨厌','一般'),
+         author VARCHAR(20) DEFAULT '匿名' NOT NULL,
          PRIMARY KEY (id)
      )
 ;`
@@ -104,8 +105,20 @@ const inserArticle = (value)=>{
     return query(_sql, value)
 }
 
+const findArticleByValue = (value)=>{
+    let _sql = `SELECT * FROM article WHERE value= "${value}"`;
+    return query(_sql);
+}
+
+const findArticleByAll = () => {
+    let _sql = `SELECT * FROM article order by moment ASC`;
+    return query(_sql);
+}
+
 module.exports = {
     insertUsers,
     findUsersByName,
-    inserArticle
+    inserArticle,
+    findArticleByValue,
+    findArticleByAll
 }

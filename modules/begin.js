@@ -140,7 +140,7 @@ exports.registerPost = async (ctx, next)=>{
             }
             upload().then(() => { 
                 ctx.body = { data: 3 } 
-                sql.insertUsers([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, h:mm:ss')])
+                sql.insertUsers([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, H:mm:ss')])
             }).catch(err => console.log(err));
         }
     })

@@ -26,7 +26,11 @@
     position: relative;
 }
 
-.container-ul p>i{
+.container-ul p>i {
     position: absolute;
     right: 0px;
+}
+
+.container-ul-sign>span{
+    cursor: pointer;
 }

@@ -7,11 +7,11 @@
                 <span class="container-ul-sign">
                     <button>喜欢</button><button>讨厌</button><span>删除</span>
                 </span>
-                
             </li>
         </ul>
         <div>
             <input type="text" placeholder="输入标题" id="container-ul-title">
+            <input type="text" placeholder="作者" id="container-ul-author">
             <textarea name="" id="" placeholder="输入内容" class="container-ul-textarea"></textarea>
             <button class="container-ul-button">提交</button>
         </div>
@@ -21,15 +21,18 @@
 <script>
     $(function(){
         $(".container-ul-button").on("click",function(){
-            let title = $("#container-ul-title").val(),value = $(".container-ul-textarea").val(); 
-            let sign = "一般q";
-            save({title,value,sign});
+            let title = $("#container-ul-title").val(), value = $(".container-ul-textarea").val(), author = $("#container-ul-author").val(); 
+            let sign = "一般";
+            if(author==""){
+                author = "匿名"
+            }
+            save({title,value,sign,author});
         })
-        $(".container-ul-sign>button").on("click",function(){
-            let title = $("#container-ul-title").val(),value = $(".container-ul-textarea").val(); 
-            let sign = $(this).html();
-            save({title,value,sign});
-        })
+        // $(".container-ul-sign>button").on("click",function(){
+        //     let title = $("#container-ul-title").val(),value = $(".container-ul-textarea").val(); 
+        //     let sign = $(this).html();
+        //     save({title,value,sign});
+        // })
         function save(resData){
             $.ajax({
                 url: "/publish",
@@ -37,7 +40,33 @@
                 dataType: "json",
                 data: resData,
                 success(res){
+                    if(res.sign==1){
+                        getAllData()
+                    }
+                },
+                error(err){
+                    console.log(err)
+                }
+            })
+        }
+        getAllData();
+        function getAllData(){
+            $.ajax({
+                url: "/getAllData",
+                type: "post",
+                dataType: "json",
+                data: {},
+                success(res){
                     console.log(res)
+                    let list = [];
+                    if(res.sign==1){
+                       list = res.data;
+                    }
+                    let str = "";
+                    for(let i=0; i<list.length; i++){
+                        str+= `<li><h4>${list[i].title}</h4><p>${list[i].value} <i>作者:${list[i].author}</i></p> <span class="container-ul-sign"><button>喜欢</button><button>讨厌</button><span>删除</span></span></li>`
+                    }
+                    $(".container-ul").html(str);
                 },
                 error(err){
                     console.log(err)
