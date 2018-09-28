@@ -3,19 +3,24 @@
     "appenders": {
         "access": {
             "type": "dateFile",
-            "filename": "logs/access.log",
-            "pattern": "-yyyy-MM-dd",
-            "category": "http"
+            "filename": "logs/access",
+            "pattern": "-yyyy-MM-dd.log",
+            "category": "http",
+            "alwaysIncludePattern": true
         },
         "app": {
-            "type": "file",
-            "filename": "logs/app.log",
+            "type": "dateFile",
+            "filename": "logs/app",
+            "pattern": "-yyyy-MM-dd.log",
             "maxLogSize": 10485760,
-            "numBackups": 3
+            "backups": 3,
+            "alwaysIncludePattern": true
         },
         "errorFile": {
-            "type": "file",
-            "filename": "logs/errors.log"
+            "type": "dateFile",
+            "filename": "logs/errors",
+            "pattern": "-yyyy-MM-dd.log",
+            "alwaysIncludePattern": true
         },
         "errors": {
             "type": "logLevelFilter",

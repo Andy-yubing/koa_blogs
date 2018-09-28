@@ -5,14 +5,14 @@
                 <h4>标题</h4>
                 <p>存放内容 <i>作者:andy</i></p>
                 <span class="container-ul-sign">
-                    <button>喜欢</button><button>讨厌</button><span>删除</span>
+                    <button>喜欢</button><button>讨厌</button><button>删除</button>
                 </span>
             </li>
         </ul>
         <div>
             <input type="text" placeholder="输入标题" id="container-ul-title">
             <input type="text" placeholder="作者" id="container-ul-author">
-            <textarea name="" id="" placeholder="输入内容" class="container-ul-textarea"></textarea>
+            <textarea name="" id="" placeholder="输入简介" class="container-ul-textarea"></textarea>
             <button class="container-ul-button">提交</button>
         </div>
     </div>
@@ -28,11 +28,31 @@
             }
             save({title,value,sign,author});
         })
-        // $(".container-ul-sign>button").on("click",function(){
-        //     let title = $("#container-ul-title").val(),value = $(".container-ul-textarea").val(); 
-        //     let sign = $(this).html();
-        //     save({title,value,sign});
-        // })
+        
+        $(document).on("click",".container-ul-sign button",function(){
+            $(this).addClass("active_btn").siblings("button").removeClass("active_btn");
+            let signId = $(this).parent(".container-ul-sign").siblings("input").val();
+            let signHtml = $(this).html();
+            if($(this).html()=="删除"){
+                $(this).parents("li").css("display","none");
+                deleteArticleById(signId)
+            }else{
+                $.ajax({
+                    url: "/changeSign",
+                    type: "post",
+                    dataType: "json",
+                    data: {signId,sign:signHtml},
+                    success(res){
+                        console.log(res)
+                    },
+                    error(err){
+                        console.log(err)
+                    }
+                })
+            }
+            
+        })
+
         function save(resData){
             $.ajax({
                 url: "/publish",
@@ -40,6 +60,7 @@
                 dataType: "json",
                 data: resData,
                 success(res){
+                    console.log(res)
                     if(res.sign==1){
                         getAllData()
                     }
@@ -64,9 +85,31 @@
                     }
                     let str = "";
                     for(let i=0; i<list.length; i++){
-                        str+= `<li><h4>${list[i].title}</h4><p>${list[i].value} <i>作者:${list[i].author}</i></p> <span class="container-ul-sign"><button>喜欢</button><button>讨厌</button><span>删除</span></span></li>`
+                        if(list[i].sign=="讨厌"){
+                            str+= `<li><h4>${list[i].title}</h4><p>${list[i].value} <i>作者:${list[i].author}</i></p> <input type="hidden" value="${list[i].id}" /> <span class="container-ul-sign"><button>喜欢</button><button class="active_btn">讨厌</button><button>删除</button></span></li>`
+                        }else if(list[i].sign=="喜欢"){
+                            str+= `<li><h4>${list[i].title}</h4><p>${list[i].value} <i>作者:${list[i].author}</i></p> <input type="hidden" value="${list[i].id}" /> <span class="container-ul-sign"><button class="active_btn">喜欢</button><button>讨厌</button><button>删除</button></span></li>`
+                        }else{
+                            str+= `<li><h4>${list[i].title}</h4><p>${list[i].value} <i>作者:${list[i].author}</i></p> <input type="hidden" value="${list[i].id}" /> <span class="container-ul-sign"><button>喜欢</button><button>讨厌</button><button>删除</button></span></li>`
+                        }
+                        
                     }
                     $(".container-ul").html(str);
+                },
+                error(err){
+                    console.log(err)
+                }
+            })
+        }
+
+        function deleteArticleById(id){
+            $.ajax({
+                url: "/deleteArticleById",
+                type: "post",
+                dataType: "json",
+                data: {id},
+                success(res){
+                    console.log(res)
                 },
                 error(err){
                     console.log(err)

@@ -101,7 +101,7 @@ const findUsersByName = (value)=>{
 }
 
 const inserArticle = (value)=>{
-    let _sql = `insert into article(title,value,moment,sign) values(?,?,?,?)`;
+    let _sql = `insert into article(title,value,moment,sign,author) values(?,?,?,?,?)`;
     return query(_sql, value)
 }
 
@@ -115,10 +115,22 @@ const findArticleByAll = () => {
     return query(_sql);
 }
 
+const updateArticleBySign = (value,id) => {
+    let _sql = `UPDATE article SET sign = '${value}' WHERE id = ${id}`;
+    return query(_sql);
+}
+
+const deleteArticleById = (id) => {
+    let _sql = `DELETE from article WHERE id = ${id}`;
+    return query(_sql);
+}
+
 module.exports = {
     insertUsers,
     findUsersByName,
     inserArticle,
     findArticleByValue,
-    findArticleByAll
+    findArticleByAll,
+    updateArticleBySign,
+    deleteArticleById
 }

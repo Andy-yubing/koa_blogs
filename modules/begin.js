@@ -143,6 +143,8 @@ exports.registerPost = async (ctx, next)=>{
                 sql.insertUsers([user.phone, user.name, md5(user.password), getName + '.png', moment().format('YYYY-MM-DD, H:mm:ss')])
             }).catch(err => console.log(err));
         }
+    }).catch(err=>{
+        console.log(err)
     })
 }
 

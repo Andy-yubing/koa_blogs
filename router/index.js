@@ -63,9 +63,11 @@ router.get("/", async (ctx, next) => {
 router.get("/login", begin.login);
 router.get("/register", begin.register);
 router.get("/test", test.one);
-router.get("/home", home.homepage)
+router.get("/home", home.homepage);
 router.post("/publish", home.publish)
 router.post("/getAllData", home.getAllData)
+router.post("/changeSign", home.changeSign)
+router.post("/deleteArticleById", home.deleteArticleById)
 router.get("/quit", async (ctx, next) => {
     ctx.session = {};
     ctx.redirect('/login')
